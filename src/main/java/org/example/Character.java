@@ -1,6 +1,8 @@
 package org.example;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,16 +17,22 @@ public class Character {
 
     private Position position;
 
+    private ArrayList<Faction> factions;
+
     public Character() {
         this.health = 1000;
         this.level = 1;
         this.isAlive = true;
         this.setMeleeFighter();
         this.position = new Position(0,0);
+        factions = new ArrayList<>();
     }
 
     public void attack(int damage, Character enemy){
         if (enemy.equals(this))
+            return;
+
+        if (bothAreFromTheSameFaction(enemy))
             return;
 
         if (!isInRange(enemy))
@@ -33,7 +41,7 @@ public class Character {
         damage = damageBasedOnLevelModifier(damage, enemy);
 
         if (damageGreaterThanHealth(damage, enemy)){
-            enemy.setHealth(enemy.getHealth()-damage);
+            enemy.takeDamage(damage);
         }
         else
             enemy.die();
@@ -54,19 +62,21 @@ public class Character {
         return damage;
     }
     public void heal(int quantity, Character objective){
-        if (!objective.equals(this))
+        if (objective.equals(this)){
+            commitHealing(quantity, objective);
+            return;
+        }
+
+        if (!bothAreFromTheSameFaction(objective))
             return;
 
         if (!objective.isAlive())
             return;
 
-        if (objective.getHealth()+quantity > 1000)
-            objective.setHealth(1000);
-
-        else objective.setHealth(objective.getHealth()+quantity);
+        commitHealing(quantity, objective);
     }
 
-    public void die() {
+    private void die() {
         isAlive = false;
         health = 0;
     }
@@ -79,10 +89,30 @@ public class Character {
         this.setRango(20);
     }
 
-    public boolean isInRange(Character enemy){
+    public void commitHealing(int quantity, Character objective){
+        if (objective.getHealth()+quantity > 1000)
+            objective.setHealth(1000);
+
+        else objective.setHealth(objective.getHealth()+quantity);
+    }
+
+    private void takeDamage(int damage){
+        this.setHealth(getHealth()-damage);
+    }
+
+    private boolean isInRange(Character enemy){
         double distanceBetweenCharacters = Point2D.distance(getPosition().getPosX(), getPosition().getPosY(), enemy.getPosition().getPosX(), enemy.getPosition().getPosY());
 
         return this.getRango() >= distanceBetweenCharacters;
+    }
+
+    private boolean bothAreFromTheSameFaction(Character rival){
+        for (Faction faction: factions) {
+            if (rival.getFactions().contains(faction) && this.getFactions().contains(faction)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

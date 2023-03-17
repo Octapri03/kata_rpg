@@ -8,10 +8,10 @@ import java.util.ArrayList;
 @Getter
 @Setter
 public class Faction {
-    String name;
-    ArrayList<Character> members;
+    private String name;
 
     public Faction(String name) {
         this.name = name;
     }
+
 }

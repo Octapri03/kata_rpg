@@ -128,4 +128,21 @@ public class AppTest
         assertEquals(1000, enemy.getHealth());
     }
 
+    @Test
+    public void test_healPlayerFromTheSameFaction(){
+        Faction factionOne = new Faction("One");
+
+        Character mainCharacter = new Character();
+        mainCharacter.getFactions().add(factionOne);
+
+        Character allie = new Character();
+        allie.setHealth(500);
+        allie.getFactions().add(factionOne);
+
+        mainCharacter.heal(200, allie);
+
+
+        assertEquals(700, allie.getHealth());
+    }
+
 }
