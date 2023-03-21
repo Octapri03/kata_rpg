@@ -1,55 +1,37 @@
 package org.example;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Character {
-    private int health;
+public class Character extends Targeteable{
+    //private int health;
     private int level;
     private boolean isAlive;
     private int rango;
 
-    private Position position;
-
-    private ArrayList<Faction> factions;
+    private Set<Faction> factions;
 
     public Character() {
-        this.health = 1000;
+        super();
         this.level = 1;
         this.isAlive = true;
         this.setMeleeFighter();
-        this.position = new Position(0,0);
-        factions = new ArrayList<>();
+        this.setPosition(new Position(0,0));
+        factions = new HashSet<>();
     }
 
-    public void attack(int damage, Character enemy){
-        if (enemy.equals(this))
-            return;
+    public void attack(int damage, Targeteable enemy){
+        if (isProp(enemy))
+            attackProp(damage, enemy);
 
-        if (bothAreFromTheSameFaction(enemy))
-            return;
-
-        if (!isInRange(enemy))
-            return;
-
-        damage = damageBasedOnLevelModifier(damage, enemy);
-
-        if (damageGreaterThanHealth(damage, enemy)){
-            enemy.takeDamage(damage);
-        }
-        else
-            enemy.die();
-    }
-
-
-    private boolean damageGreaterThanHealth(int damage, Character enemy){
-        return enemy.getHealth() > damage;
+        if (isCharacter(enemy))
+            attackCharacter(damage, enemy);
     }
 
     private int damageBasedOnLevelModifier(int damage, Character enemy){
@@ -62,23 +44,33 @@ public class Character {
         return damage;
     }
     public void heal(int quantity, Character objective){
-        if (objective.equals(this)){
+        if (isValidTargetToHeal(objective))
             commitHealing(quantity, objective);
-            return;
-        }
-
-        if (!bothAreFromTheSameFaction(objective))
-            return;
-
-        if (!objective.isAlive())
-            return;
-
-        commitHealing(quantity, objective);
     }
 
-    private void die() {
-        isAlive = false;
-        health = 0;
+    private void checkDead() {
+        if (getHealth() <= 0){
+            isAlive = false;
+            setHealth(0);
+        }
+    }
+
+    public void attackProp(int damage, Targeteable enemy){
+        if (isInRange(enemy)){
+            enemy.takeDamage(damage);
+            ((Prop) enemy).checkDestroyed();
+        }
+    }
+
+    public void attackCharacter(int damage, Targeteable enemy){
+        if (!isValidTargetToAttack(enemy))
+            return;
+
+        damage = damageBasedOnLevelModifier(damage, (Character) enemy);
+
+        enemy.takeDamage(damage);
+
+        ((Character) enemy).checkDead();
     }
 
     public void setMeleeFighter(){
@@ -96,11 +88,33 @@ public class Character {
         else objective.setHealth(objective.getHealth()+quantity);
     }
 
-    private void takeDamage(int damage){
-        this.setHealth(getHealth()-damage);
+    public boolean isValidTargetToAttack(Targeteable target){
+        if (target.equals(this))
+            return false;
+
+        if (bothAreFromTheSameFaction((Character) target))
+            return false;
+
+        if (!isInRange(target))
+            return false;
+
+        return true;
     }
 
-    private boolean isInRange(Character enemy){
+    public boolean isValidTargetToHeal(Targeteable target){
+        if (target.equals(this))
+            return true;
+
+        if (!bothAreFromTheSameFaction((Character) target))
+            return false;
+
+        if (!((Character)target).isAlive())
+            return false;
+
+        return true;
+    }
+
+    private boolean isInRange(Targeteable enemy){
         double distanceBetweenCharacters = Point2D.distance(getPosition().getPosX(), getPosition().getPosY(), enemy.getPosition().getPosX(), enemy.getPosition().getPosY());
 
         return this.getRango() >= distanceBetweenCharacters;
@@ -108,7 +122,7 @@ public class Character {
 
     private boolean bothAreFromTheSameFaction(Character rival){
         for (Faction faction: factions) {
-            if (rival.getFactions().contains(faction) && this.getFactions().contains(faction)){
+            if (rival.getFactions().contains(faction)){
                 return true;
             }
         }

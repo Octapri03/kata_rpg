@@ -2,6 +2,7 @@ package org.example;
 
 
 import junit.framework.TestCase;
+import lombok.SneakyThrows;
 import org.junit.Test;
 
 /**
@@ -20,6 +21,7 @@ public class AppTest
 
         assertEquals(900, enemy.getHealth());
     }
+
 
     @Test
     public void test_attackEnemyAndKill()
@@ -143,6 +145,31 @@ public class AppTest
 
 
         assertEquals(700, allie.getHealth());
+    }
+
+    @Test
+    public void test_player_can_hurt_props(){
+
+        Character mainCharacter = new Character();
+
+        Prop tree = new Prop(2000);
+
+        mainCharacter.attack(200, tree);
+
+
+        assertEquals(1800, tree.getHealth());
+    }
+
+    @Test
+    public void test_player_can_destroy_props(){
+
+        Character mainCharacter = new Character();
+
+        Prop tree = new Prop(2000);
+
+        mainCharacter.attack(2000, tree);
+
+        assertEquals(true, tree.isDestroyed());
     }
 
 }

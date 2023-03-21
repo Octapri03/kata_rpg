@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7dd2febb-e44d-4e98-96e3-dcbd76f587c9" name="Changes" comment="iteration 3 rpgKata">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Prop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Targeteable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Character.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/AppTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +20,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -44,7 +49,8 @@
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/oprietov/IdeaProjects/yeee/kata_rpg&quot;
   }
 }</component>
   <component name="RunManager" selected="JUnit.AppTest">
@@ -95,7 +101,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AppTest.test_playerMeleeHitsOutRange" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AppTest.test_player_can_destroy_props" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="kata_rpg" />
       <extension name="coverage">
         <pattern>
@@ -105,13 +111,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="org.example" />
       <option name="MAIN_CLASS_NAME" value="org.example.AppTest" />
-      <option name="METHOD_NAME" value="test_playerMeleeHitsOutRange" />
+      <option name="METHOD_NAME" value="test_player_can_destroy_props" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AppTest.test_playerRangedHitsOutRange" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AppTest.test_player_can_hurt_props" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="kata_rpg" />
       <extension name="coverage">
         <pattern>
@@ -121,7 +127,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="org.example" />
       <option name="MAIN_CLASS_NAME" value="org.example.AppTest" />
-      <option name="METHOD_NAME" value="test_playerRangedHitsOutRange" />
+      <option name="METHOD_NAME" value="test_player_can_hurt_props" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -130,10 +136,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.AppTest" />
+        <item itemvalue="JUnit.AppTest.test_player_can_destroy_props" />
+        <item itemvalue="JUnit.AppTest.test_player_can_hurt_props" />
         <item itemvalue="JUnit.AppTest.test_healPlayerFromTheSameFaction" />
         <item itemvalue="JUnit.AppTest.test_attackEnemyButDontKill" />
-        <item itemvalue="JUnit.AppTest.test_playerRangedHitsOutRange" />
-        <item itemvalue="JUnit.AppTest.test_playerMeleeHitsOutRange" />
       </list>
     </recent_temporary>
   </component>
@@ -174,7 +180,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679067130076</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="iteration 3 rpgKata">
+      <created>1679297676043</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1679297676043</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
